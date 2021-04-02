@@ -1,0 +1,40 @@
+﻿@page "/Meeting/{NavigationIndex:int}"
+@using Microsoft.AspNetCore.SignalR.Client
+@implements RaiseHand.Core.Threading.IRHComponentBase
+@using RaiseHand.Core.ViewModels
+@inject MeetingViewModel ViewModel
+<style>
+    .button-on {
+        background: orange
+    }
+</style>
+<h3>meeting</h3>
+<br />
+@ViewModel.HostCode
+<br />
+<ul class="nav flex-column">
+    @foreach (var user in ViewModel.UserNames)
+    {
+        <li class="nav-item px-3 " style="background-color:@(ViewModel.RaisedNames.Contains(user) ? "ffffff" : "000000" ) ">
+            <button class="@(ViewModel.RaisedNames.Contains(user) ? "button-on" : "")" @onclick="() => ViewModel.OnRaiseHand(user)">@user</button>
+        </li>
+    }
+</ul>
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter]
+    public int NavigationIndex { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ViewModel.NavigationIndex = NavigationIndex;
+        ViewModel.Dispatcher = this;
+        ViewModel.OnLoaded();
+        base.OnInitialized();
+    }
+
+    public void OnStateChanged()
+    {
+        StateHasChanged();
+    }
+}

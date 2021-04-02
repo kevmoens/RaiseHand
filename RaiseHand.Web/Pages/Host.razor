@@ -1,0 +1,33 @@
+﻿@page "/Host/{NavigationIndex:int}"
+@using Microsoft.AspNetCore.SignalR.Client
+@implements RaiseHand.Core.Threading.IRHComponentBase
+@using RaiseHand.Core.ViewModels
+@inject HostViewModel ViewModel
+<h3>Host</h3>
+<br/>
+@ViewModel.HostCode
+<br />
+Name <input @bind-value="ViewModel.Name" />
+<br/>
+<button @onclick="ViewModel.OnStart">START</button>
+<br/>
+<button @onclick="ViewModel.OnBack">BACK</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    [Parameter]
+    public int NavigationIndex { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ViewModel.NavigationIndex = NavigationIndex;
+        ViewModel.Dispatcher = this;
+        ViewModel.OnLoaded();
+        base.OnInitialized();
+    }
+
+    public void OnStateChanged()
+    {
+        StateHasChanged();
+    }
+}

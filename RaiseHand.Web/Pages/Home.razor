@@ -1,0 +1,35 @@
+﻿@page "/Home"
+@using Microsoft.AspNetCore.SignalR.Client
+@implements RaiseHand.Core.Threading.IRHComponentBase
+@using RaiseHand.Core.ViewModels
+@inject HomeViewModel ViewModel
+<!--
+<input @bind="ViewModel.Message" />
+<button @onclick="@(() => ViewModel.OnSendMessageCommand())">SEND</button>
+<br />
+<ul id="messagesList">
+    @foreach (var message in ViewModel.Messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+-->
+<button style="justify-content:center" @onclick="@(() => ViewModel.OnHost())">Host</button>
+<br />
+<button @onclick="@(() => ViewModel.OnJoin())">Join</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ViewModel.Dispatcher = this;
+        ViewModel.OnLoaded();
+        base.OnInitialized();
+    }
+
+    public void OnStateChanged()
+    {
+        StateHasChanged();
+    }
+}

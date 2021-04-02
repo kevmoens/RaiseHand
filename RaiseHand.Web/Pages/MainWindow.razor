@@ -1,0 +1,22 @@
+﻿@page "/"
+@implements RaiseHand.Core.Threading.IRHComponentBase
+@inject NavigationManager navigationManager
+@using RaiseHand.Core.SignalR
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@inject Connection connection
+
+@code {
+
+    protected async override void OnInitialized()
+    {
+        await connection.Connect(Configuration["ConnectURL"]);
+        base.OnInitialized();
+        navigationManager.NavigateTo("/Home");
+    }
+    public void OnStateChanged()
+    {
+        StateHasChanged();
+    }
+
+}
