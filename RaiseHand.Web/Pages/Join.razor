@@ -23,6 +23,9 @@
     <MatButton style="justify-content: center; width: 150px; margin:auto;" Raised="true" OnClick="ViewModel.OnBack">
         BACK
     </MatButton>
+    <br />
+    Connection Wait 
+    <MatSlider ValueMin="100" ValueMax="60000" @bind-Value="@ViewModel.Wait" />
 </div>
     @code {
         [CascadingParameter] public IModalService Modal { get; set; }

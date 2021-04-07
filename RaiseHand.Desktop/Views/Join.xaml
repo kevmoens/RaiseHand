@@ -21,6 +21,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -38,5 +39,13 @@
         </StackPanel>
         <Button Grid.Row="3" Grid.Column="1" Content="Start" Command="{Binding StartCommand}" VerticalAlignment="Center" Margin="2" IsEnabled="{Binding IsEnabled}"/>
         <Button Grid.Row="4" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" VerticalAlignment="Center" Margin="2" IsEnabled="{Binding IsEnabled}"/>
+        <Grid Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Connection Wait" Margin="10"/>
+            <Slider  Grid.Column="1" Margin="10"  Minimum="100" Maximum="60000" Value="{Binding Wait}"/>
+        </Grid>
     </Grid>
 </UserControl>

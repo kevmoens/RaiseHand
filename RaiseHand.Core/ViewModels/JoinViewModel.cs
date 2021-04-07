@@ -35,6 +35,8 @@ namespace RaiseHand.Core.ViewModels
         public string HostCode { get { return _HostCode; } set { _HostCode = value; OnPropertyChanged(); } }
         private string _Name;
         public string Name { get { return _Name; } set { _Name = value; OnPropertyChanged(); } }
+        private decimal _Wait = 2000;
+        public decimal Wait { get { return _Wait; } set { _Wait = value; OnPropertyChanged(); } }
         public ICommand LoadedCommand { get; set; }
         public ICommand StartCommand { get; set; }
         public ICommand BackCommand { get; set; }
@@ -104,7 +106,7 @@ namespace RaiseHand.Core.ViewModels
             parms.Add("Name", Name);           
             ConnectEvent.Instance.Publish(new Connect() { Method = "SET", Parms = parms });
             ConnectEvent.Instance.Publish(new Connect() { Method = "SendCheckHostCode", Parms = parms });
-            await Task.Delay(2000);
+            await Task.Delay(Decimal.ToInt32(Wait));
             IsEnabled = true;
             if (token != null) {
                 var msg = _serviceProvider.GetService<IMessage>();
