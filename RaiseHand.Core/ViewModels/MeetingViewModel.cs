@@ -59,39 +59,41 @@ namespace RaiseHand.Core.ViewModels
                     switch (c.Method)
                     {
                         case "ReceiveUpdate":
-                                var newUserNames = (List<string>)c.Parms["UserNames"];
-                                foreach (var newUser in newUserNames)
-                                {
-                                    if (!UserNames.Contains(newUser))
+                                _dispatcher.Invoke(Dispatcher, () => {
+                                    var newUserNames = (List<string>)c.Parms["UserNames"];
+                                    foreach (var newUser in newUserNames)
                                     {
-                                        UserNames.Add(newUser);
+                                        if (!UserNames.Contains(newUser))
+                                        {
+                                            UserNames.Add(newUser);
+                                        }
                                     }
-                                }
-                                var removeUsers = new List<string>();
-                                foreach (var existUser in UserNames)
-                                {
-                                    if (!newUserNames.Contains(existUser))
+                                    var removeUsers = new List<string>();
+                                    foreach (var existUser in UserNames)
                                     {
-                                        removeUsers.Add(existUser);
+                                        if (!newUserNames.Contains(existUser))
+                                        {
+                                            removeUsers.Add(existUser);
+                                        }
                                     }
-                                }
-                                foreach (var user in removeUsers)
-                                {
-                                    UserNames.Remove(user);
-                                }
-
+                                    foreach (var user in removeUsers)
+                                    {
+                                        UserNames.Remove(user);
+                                    }
+                                });
                                 break;
                             case "ReceiveUpdateRaiseHands":
                                 if (c.Parms.ContainsKey("HostCode"))
                                 {
-                                    var RaisedHands = (List<string>)c.Parms["RaisedHands"];
-                                    RaisedNames.Clear();
-                                    foreach (var name in RaisedHands)
-                                    {
-                                        RaisedNames.Add(name);
-                                    }
-                                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RaisedNames"));
-                                    _dispatcher.Invoke(Dispatcher, () => { });
+                                    _dispatcher.Invoke(Dispatcher, () => {
+                                        var RaisedHands = (List<string>)c.Parms["RaisedHands"];
+                                        RaisedNames.Clear();
+                                        foreach (var name in RaisedHands)
+                                        {
+                                            RaisedNames.Add(name);
+                                        }
+                                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RaisedNames"));
+                                    });
                                 }
                                 break;
                             case "ReceiveCloseHost":

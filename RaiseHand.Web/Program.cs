@@ -1,4 +1,5 @@
 using Blazored.Modal;
+using MatBlazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,7 @@ namespace RaiseHand.Web
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
+            builder.Services.AddMatBlazor();
             builder.Services.AddBlazoredModal();
             builder.Services.AddTransient<IRHDispatcher, RHDispatcher>();
             builder.Services.AddTransient<IMessage, Message>();

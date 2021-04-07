@@ -8,18 +8,19 @@
         background: orange
     }
 </style>
-<h3>meeting</h3>
+<h2 class="mat-h2">Meeting</h2>
 <br />
-@ViewModel.HostCode
+<h3 class="mat-h3">@ViewModel.HostCode</h3>
 <br />
-<ul class="nav flex-column">
     @foreach (var user in ViewModel.UserNames)
     {
-        <li class="nav-item px-3 " style="background-color:@(ViewModel.RaisedNames.Contains(user) ? "ffffff" : "000000" ) ">
-            <button class="@(ViewModel.RaisedNames.Contains(user) ? "button-on" : "")" @onclick="() => ViewModel.OnRaiseHand(user)">@user</button>
-        </li>
-    }
-</ul>
+        <MatThemeProvider Theme="@GetButtonTheme(user)">
+            <MatButton Style="width:120px; padding: 50px 0; " Raised="true" OnClick="() => ViewModel.OnRaiseHand(user)">@user</MatButton>
+        </MatThemeProvider>
+     }
+
+    <MatButton Style="position: fixed; bottom: 10px; left: 10px; width:120px" Raised="true" OnClick="() => ViewModel.OnLeave()">Leave</MatButton>
+
 @code {
     [CascadingParameter] public IModalService Modal { get; set; }
     [Parameter]
@@ -36,5 +37,20 @@
     public void OnStateChanged()
     {
         StateHasChanged();
+    }
+
+    public MatTheme GetButtonTheme(string user)
+    {
+        MatTheme theme1 = new MatTheme();
+        if (ViewModel.RaisedNames.Contains(user))
+        {
+            theme1.Primary = MatThemeColors.Orange._500.Value;
+        }
+        else
+        {
+            theme1.Primary = MatThemeColors.Purple._500.Value;
+        }
+
+        return theme1;
     }
 }

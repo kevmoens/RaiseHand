@@ -3,32 +3,42 @@
 @implements RaiseHand.Core.Threading.IRHComponentBase
 @using RaiseHand.Core.ViewModels
 @inject JoinViewModel ViewModel
-<h3>Join</h3>
-<br />
-Code
-<input @bind-value="ViewModel.HostCode" />
-<br />
-Name
-<input @bind-value="ViewModel.Name" />
-<br />
-<button @onclick="ViewModel.OnStart">START</button>
-<br />
-<button @onclick="ViewModel.OnBack">BACK</button>
-@code {
-    [CascadingParameter] public IModalService Modal { get; set; }
-    [Parameter]
-    public int NavigationIndex { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ViewModel.NavigationIndex = NavigationIndex;
-        ViewModel.Dispatcher = this;
-        ViewModel.OnLoaded();
-        base.OnInitialized();
+<style>
+    .content {
+        max-width: 500px;
+        margin: auto;
     }
+</style>
+<div class="content">
+    <h3 class="mat-h3" style="justify-content: center;width:150px; margin: auto;">Join</h3>
+    <br />
+    <MatTextField style="justify-content: center; width: 150px; margin:auto;" @bind-Value="@ViewModel.HostCode" Label="Code"></MatTextField>
+    <br />
+    <MatTextField style="justify-content: center; width: 150px; margin:auto;" @bind-Value="@ViewModel.Name" Label="Name"></MatTextField>
+    <br />
+    <MatButton style="justify-content: center; width: 150px; margin:auto;" Raised="true" OnClick="ViewModel.OnStart">
+        START
+    </MatButton>
+    <br />
+    <MatButton style="justify-content: center; width: 150px; margin:auto;" Raised="true" OnClick="ViewModel.OnBack">
+        BACK
+    </MatButton>
+</div>
+    @code {
+        [CascadingParameter] public IModalService Modal { get; set; }
+        [Parameter]
+        public int NavigationIndex { get; set; }
 
-    public void OnStateChanged()
-    {
-        StateHasChanged();
+        protected override void OnInitialized()
+        {
+            ViewModel.NavigationIndex = NavigationIndex;
+            ViewModel.Dispatcher = this;
+            ViewModel.OnLoaded();
+            base.OnInitialized();
+        }
+
+        public void OnStateChanged()
+        {
+            StateHasChanged();
+        }
     }
-}

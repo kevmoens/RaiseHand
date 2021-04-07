@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="Default Web Site/RaiseHandConnect" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\code\\_Work\\RaiseHand\\RaiseHand\.Connect\\obj\\Release\\net5\.0-windows\\win-x64\\PubTmp\\Out\\$" />
-  </parameter>
-</parameters>

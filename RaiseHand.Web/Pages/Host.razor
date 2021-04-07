@@ -3,31 +3,40 @@
 @implements RaiseHand.Core.Threading.IRHComponentBase
 @using RaiseHand.Core.ViewModels
 @inject HostViewModel ViewModel
-<h3>Host</h3>
-<br/>
-@ViewModel.HostCode
-<br />
-Name <input @bind-value="ViewModel.Name" />
-<br/>
-<button @onclick="ViewModel.OnStart">START</button>
-<br/>
-<button @onclick="ViewModel.OnBack">BACK</button>
-
-@code {
-    [CascadingParameter] public IModalService Modal { get; set; }
-    [Parameter]
-    public int NavigationIndex { get; set; }
-
-    protected override void OnInitialized()
-    {
-        ViewModel.NavigationIndex = NavigationIndex;
-        ViewModel.Dispatcher = this;
-        ViewModel.OnLoaded();
-        base.OnInitialized();
+<style>
+    .content {
+        max-width: 500px;
+        margin: auto;
     }
+</style>
+<div class="content">
+    <h2 class="mat-h2" style="justify-content: center; width: 150px; margin:auto;">Host</h2>
+    <br />
+    <h3 class="mat-h3" style="justify-content: center; width:150px; margin: auto; ">@ViewModel.HostCode</h3>
+    <br />
+    <MatTextField style="justify-content: center; width: 200px; margin:auto;" @bind-Value="@ViewModel.Name" Label="Name"></MatTextField>
+    <br />
+    <MatButton style="justify-content: center; width: 200px;" Raised="true" OnClick="ViewModel.OnStart">
+        START
+    </MatButton>
+    <br />
+    <MatButton style="justify-content: center; width: 200px;" Raised="true" OnClick="ViewModel.OnBack">BACK</MatButton>
+</div>
+    @code {
+        [CascadingParameter] public IModalService Modal { get; set; }
+        [Parameter]
+        public int NavigationIndex { get; set; }
 
-    public void OnStateChanged()
-    {
-        StateHasChanged();
+        protected override void OnInitialized()
+        {
+            ViewModel.NavigationIndex = NavigationIndex;
+            ViewModel.Dispatcher = this;
+            ViewModel.OnLoaded();
+            base.OnInitialized();
+        }
+
+        public void OnStateChanged()
+        {
+            StateHasChanged();
+        }
     }
-}

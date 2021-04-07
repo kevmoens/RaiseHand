@@ -78,6 +78,25 @@ namespace RaiseHand.Core.ViewModels
 
         public async void OnStart()
         {
+
+            if (String.IsNullOrWhiteSpace(HostCode))
+            {
+                var msg = _serviceProvider.GetService<IMessage>();
+                msg.Caption = "Raise Hand";
+                msg.Text = "Code is required.";
+                await msg.Show();
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Name))
+            {
+                var msg = _serviceProvider.GetService<IMessage>();
+                msg.Caption = "Raise Hand";
+                msg.Text = "Name is required.";
+                await msg.Show();
+                return;
+            }
+
             IsEnabled = false;
             var parms = new Dictionary<string, object>();
             parms.Add("HostCode", HostCode.ToUpper());

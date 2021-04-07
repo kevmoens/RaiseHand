@@ -3,33 +3,47 @@
 @implements RaiseHand.Core.Threading.IRHComponentBase
 @using RaiseHand.Core.ViewModels
 @inject HomeViewModel ViewModel
-<!--
-<input @bind="ViewModel.Message" />
-<button @onclick="@(() => ViewModel.OnSendMessageCommand())">SEND</button>
-<br />
-<ul id="messagesList">
-    @foreach (var message in ViewModel.Messages)
-    {
-        <li>@message</li>
+<style>
+    .content {
+        max-width: 500px;
+        margin: auto;
     }
-</ul>
--->
-<button style="justify-content:center" @onclick="@(() => ViewModel.OnHost())">Host</button>
-<br />
-<button @onclick="@(() => ViewModel.OnJoin())">Join</button>
+</style>
+<div class="content">
+    <div class="container">
+        <div class="row" align="center">
+            <div class="col-lg-4  ">
+            </div>
+            <div class="col-lg-4 ">
+                <span><MatButton Raised="true" style="justify-content: center; width: 150px; margin: auto;" OnClick="@(() => ViewModel.OnHost())">Host</MatButton></span>
+            </div>
+            <div class="col-lg-4 ">
+            </div>
+        </div>
+        <br />
+        <div class="row" align="center">
+            <div class="col-lg-4 ">
+            </div>
+            <div class="col-lg-4 ">
+                <span><MatButton style="justify-content: center; width: 150px; margin: auto;" Raised="true" OnClick="@(() => ViewModel.OnJoin())">Join</MatButton></span>
+            </div>
+            <div class="col-lg-4 ">
+            </div>
+        </div>
+    </div>
+</div>
+    @code {
+        [CascadingParameter] public IModalService Modal { get; set; }
 
-@code {
-    [CascadingParameter] public IModalService Modal { get; set; }
+        protected override void OnInitialized()
+        {
+            ViewModel.Dispatcher = this;
+            ViewModel.OnLoaded();
+            base.OnInitialized();
+        }
 
-    protected override void OnInitialized()
-    {
-        ViewModel.Dispatcher = this;
-        ViewModel.OnLoaded();
-        base.OnInitialized();
+        public void OnStateChanged()
+        {
+            StateHasChanged();
+        }
     }
-
-    public void OnStateChanged()
-    {
-        StateHasChanged();
-    }
-}
